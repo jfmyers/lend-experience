@@ -1,0 +1,48 @@
+{% load url from future %}
+<div id="explore-drop-down" class="blank">
+  	<ul class="nav-drop-down-menu">
+    	<li>
+			<a href="{% url 'careers:career' 'ArtDesignFashion' %}">Art, Design & Fashion</a>
+		</li>
+	    <li>
+			<a href="{% url 'careers:career' 'Business' %}">Business</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'Education' %}">Education</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'Energy' %}">Energy</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'Engineering' %}">Engineering</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'Entertainment' %}">Entertainment</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'GovernmentAndLaw' %}">Government & Law</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'HealthAndMedicine' %}">Health & Medicine</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'NonProfits' %}">NonProfits</a>
+		</li>
+		<li>
+			<a href="{% url 'careers:career' 'Technology' %}">Technology</a>
+		</li>
+  	</ul>
+</div>
+<div id="myaccount-drop-down" class="blank">
+  	<ul class="nav-drop-down-menu">
+		<li>
+			<a href="{% url 'myUserProfile:mystory' %}">My Story</a>
+		</li>
+		<li>
+			<a href="{% url 'myUserProfile:edit' %}">Edit Story</a>
+		</li>
+		<li style="border-top:1px solid #eee;margin-top:10px;margin-bottom:-15px;">
+			<a href="{% url 'accounts:logout' %}">Logout</a>
+		</li>
+	</ul>
+</div>

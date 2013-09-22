@@ -1,0 +1,22 @@
+{% load url from future %}
+
+{% if results %}
+{% for result in results %}
+<form class="new_tag_form" method="POST" action="{% url 'tags:saveTag' %}">
+	<input type="hidden" name="tag_text" value="{{ result }}"/>
+	<input type="hidden" name="contribution_id" value="{{ search.contribution_id }}"/>
+	<input type="hidden" name="type" value="old"/>
+	<input type="submit" name="newTag" class="newTagSubmit" value="{{ result }}"/>
+	{% csrf_token %}
+</form>
+{% endfor %}
+{% else %}
+<form class="new_tag_form" method="POST" action="{% url 'tags:saveTag' %}">
+	<p>Create New Tag <span style="color:#0E4141">{{ search.string }}</span></p>
+	<input type="hidden" name="tag_text" value="{{ search.string }}"/>
+	<input type="hidden" name="contribution_id" value="{{ search.contribution_id }}"/>
+	<input type="hidden" name="type" value="new"/>
+	<input type="submit" name="newTag" class="newTagSubmit" value="{{ search.string }} "/>
+	{% csrf_token %}
+</form>
+{% endif %}

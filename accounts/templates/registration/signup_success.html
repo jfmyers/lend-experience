@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+{% include "core/topNav_default.html" %}
+<div class="content">
+	<div class="content-inner">
+		<div class="form-center-message">
+			<h2 class="merri-font">Thanks for joining!</h2>
+			<p class="hel-font">We're glad to have you as a member of the community. Feel free to login whenever and share your career experiences to those that could benefit.</p>
+			<a href="{%  url 'accounts:login' %}" class="seagreen-button-flat hel-font aButton">Go to Login</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

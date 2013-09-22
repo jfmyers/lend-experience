@@ -1,0 +1,20 @@
+{% load url from future %}
+
+{% if results %}
+	{% for result in results %}
+		<li>
+			{% if result.type == "Experience" %}
+				<a class="search-result-item" href="{% url 'contributions:detail' result.handle result.pk %}">
+			{% elif result.type == "Career Topic" %}
+				<a class="search-result-item" href="{% url 'tagDetail:tagView' result.handle result.pk %}">
+			{% else %}
+				<a class="search-result-item" href="{% url 'userProfile:story' result.handle result.pk %}">
+			{% endif %}
+					<span>{{ result.title }}</span>
+					<span>{{ result.type }}</span>
+				</a>
+		</li>
+	{% endfor %}
+{% else %}
+	<p class='noResult'>We were not able to match your search to any people, career topics or experiences. Try a different search next time.</p>
+{% endif %}

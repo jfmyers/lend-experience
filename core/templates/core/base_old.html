@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+   {% include "core/head.html" %}
+</head>
+<body>
+	<div class="container">
+    	{% include "core/topNav.html" %}
+		<div class="content">
+			<div class="content-inner">
+        		{% block content %}{% endblock %}
+			</div>
+		</div>
+		{% include "core/footer.html" %}
+	</div>
+	<script type="text/javascript" src="https://d3fuw6vo22gqor.cloudfront.net/js/placeholder.v.2.1.0.js" ></script>
+</body>
+</html>

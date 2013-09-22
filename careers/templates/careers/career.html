@@ -1,0 +1,74 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block content %}
+{% if authenticated == False %}
+	{% include "core/topNav_detail_out.html" %}
+{% else %}
+	{% include "core/topNav_detail_in.html" %}
+{% endif %}
+<script type="text/javascript"> 
+	var page = "career";
+	var career_url = "career/{{ career.name }}";
+</script>
+
+<div class="content">
+	<div class="content-inner">
+		<div class="content-item-list">
+			<div class="content-title-box">
+				<div class="content-image-holder">
+					<div>
+						<img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/{{ career.pic }}" />
+					</div>
+				</div>
+				<h2 class="merri-font">{{ career.name }}</h2>
+				<p class="volk-font">{{ post_list.count }} Contributions</p>
+			</div>
+			{% for post in post_list %}
+			<div class="content-item" id="post_{{post.id}}">
+				<div class="author">
+					<div class="image-holder-round">
+						<a href="{% url 'userProfile:story' post.user.handle post.user.id %}"><img src="https://d3op517cq3iurb.cloudfront.net/{{ post.user.pic }}" /></a>
+					</div>
+				
+					<p><a href="{% url 'userProfile:story' post.user.handle post.user.id %}">{{ post.user.fname }} {{ post.user.lname }}
+					{% if post.user.title != "" %}
+					| {{ post.user.title }}
+					{% elif post.user.type != "" %}
+					| {{ post.user.type }}
+					{% endif %}</a></p>
+			
+				</div>
+				
+				<h1 class="volk-font"><a href="{% url 'contributions:detail' post.url post.id %}">{{ post.title }}</a></h1>
+				<p class="volk-font limited-text">{{ post.description }}</p>
+				<div class="tag-holder">
+					{% for tag in post.tags.all %}
+						<a class="tag volk-font grey-button-flat" href="{% url 'tagDetail:tagView' tag.handle tag.id %}">{{ tag.name }} </a>
+					{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
+			{% if is_paginated %}
+				<div class="pagination">
+		            <span class="page-links">
+		                {% if page_obj.has_previous %}
+		                    <a href="{% url 'careers:career' career.url %}?page={{ page_obj.previous_page_number }}">previous</a>
+		                {% endif %}
+		                <span class="page-current">
+		                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+		                </span>
+		                {% if page_obj.has_next %}
+		                    <a href="{% url 'careers:career' career.url %}?page={{ page_obj.next_page_number }}">next</a>
+		                {% endif %}
+		            </span>
+		        </div>
+			{% endif %}
+		</div>
+		<div class="content-side-bar">
+			<a class="seagreen-button-flat contribute-button" href="{% url 'contributions:post' %}">Contribute to {{ career.name }}</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

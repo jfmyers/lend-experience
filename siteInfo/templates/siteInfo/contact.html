@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block content %}
+{% if authenticated == False %}
+	{% include "core/topNav_detail_out.html" %}
+{% else %}
+	{% include "core/topNav_detail_in.html" %}
+{% endif %}
+<script type="text/javascript"> 
+	var page = "contact";
+</script>
+
+<div class="content">
+	<div class="content-inner">
+		<div class="info-left">
+			<h1 class="merri-font">Say Hello, We'd Love to Talk</h1>
+			<p style="font-size:15px;line-height:22px">We love hearing from our users and those genuinely interested in what we're building. Give us a shout. We're located in the great city of New York.</p>
+			<div class="contact">
+				<a href="mailto:hello@lendexperience.com">hello@lendexperience.com</a>
+				<p>(631) 327-0325</p>
+				<p>New York, NY</p>
+			</div>
+		</div>
+		{% include "siteInfo/sideNav.html" %}
+	</div>
+</div>
+{% endblock %}

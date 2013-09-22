@@ -1,0 +1,23 @@
+{% load url from future %}
+<div class="top-nav">
+	<div class="top-nav-inner">
+		<a href="/"><img class="logo" src="https://d3fuw6vo22gqor.cloudfront.net/images/logos/le75.png" /></a>
+		<div id="tab-group">
+			<a href="#"class="tab toggle-nav-drop-down">
+				<span>Explore ▾</span>
+			</a>
+			<div class="vertical-divider"></div>
+			<a class="tab" href="{% url 'contributions:post' %}">
+				<span>Contribute</span>
+			</a>
+			<div class="vertical-divider"></div>
+		</div>
+		<div class="search">
+			<form id="search_form" method="POST" action="{% url 'search:searchAll' %}">
+				<input id="search" name="search" type="text" placeholder="Search Career Experiences" />
+				{% csrf_token %}
+			</form>
+		</div>
+	</div>
+</div>
+{% include "core/dropdowns.html" %}

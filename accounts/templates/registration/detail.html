@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<script type="text/javascript"> 
+	var page = "blog_{{ post.id }}";
+	mixpanel.track(page);
+	$(document).ready(function(){
+		$("#openCommentForm").click(function(){
+			$("#fakeCommentForm").addClass("hidden");
+			$("#commentForm").removeClass("hidden");
+			$("#email").focus();
+		})
+	})
+</script>
+<div class="content-container">
+{% if post %}
+	<div class="post">
+		<div class="col1">
+			<p>>_</p>
+		</div>
+		<div class="col2">
+			<p class="title">{{post.title}}</p>
+			<p class="dateCreated">
+				{{post.pub_date}}
+			</p>
+			<p class="text">
+				{% autoescape off %} {{post.post | linebreaksbr}} {% endautoescape %}
+			</p>
+		</div>
+	</div>
+	<div id="fakeCommentForm" class="form-holder">
+		<textarea class="tall" id="openCommentForm" placeholder="Click to Share Your Thoughts..."></textarea>
+	</div>
+	<div id="commentForm" class="form-holder hidden">
+		<form action="{% url 'post:comment' post.id %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" id="post_id" name="post_id" value="{{post.id}}">
+			<input type="text" id="email" name="email"placeholder="Email (This will never be shared with anyone.)">
+			<input type="text" id="name" name="name"placeholder="Name">
+			<textarea id="text" name="text"placeholder="Your Thoughts"></textarea>
+			<input class="orange-button-flat" type="submit" value="Submit Your Thoughts" />
+		</form>
+	</div>
+	<ul class="item-holder">
+		{% if comment_list %}
+    		{% for comment in comment_list %}
+				<li>
+					<div class="item-col-1">
+						<p class="titleS"><-</p>
+					</div>
+					<div class="item-col-2">
+						<p class="titleS">{{comment.name}}</p>
+						<p class="dateCreatedS">{{comment.pub_date}}</p>
+						<p class="textS">{% autoescape off %} {{comment.text | linebreaksbr}} {% endautoescape %}</p>
+					</div>
+				</li>
+    		{% endfor %}
+		{% else %}
+    	<li>
+			<p class="title" style="color:#8F8F8F">Be the first to share your thoughts!</p>
+		</li>			 
+		{% endif %}
+	</ul>
+	{% else %}
+    	<div>No post is available.</div>			 
+	{% endif %}
+</div>
+{% endblock %}

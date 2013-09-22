@@ -1,0 +1,109 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block content %}
+{% if authenticated == False %}
+	{% include "core/topNav_detail_out.html" %}
+{% else %}
+	{% include "core/topNav_detail_in.html" %}
+{% endif %}
+<div class="content">
+	<div class="content-inner">
+		<div class="welcome-holder">
+			<div class="welcome-holder-left">
+				<h1 class="merri-font">Welcome to <span style="color:#316868">Lend Experience</span></h1>
+				<p class="merri-font">The best source for first-hand career knowledge.</br>Start exploring or become a <a href="{% url 'accounts:signup' %}">contributor</a>.</p>
+				{% if authenticated == False %}
+					<a class="actionButton seagreen-button-flat" href="{% url 'accounts:signup' %}">Sign Up</a>
+					<a class="actionButton grey-button-flat" href="{% url 'accounts:login' %}">Login</a>
+				{% endif %}
+			</div>
+			<div class="welcome-holder-right" {% if authenticated == False %} style="margin:18px 21px 0px 0px" {% endif %}>
+				<div class="tile" data-toggle="tooltip" data-placement="top" title="Engineering">
+					<a href="{% url 'careers:career' 'Engineering' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/engineering1.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="top" title="Energy">
+					<a href="{% url 'careers:career' 'Energy' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/energy1.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip"data-placement="top" title="Education">
+					<a href="{% url 'careers:career' 'Education' %}" ><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/education4.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="top" title="Business">
+					<a href="{% url 'careers:career' 'Business' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/marketing1.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="top" title="Art, Design & Fashion">
+					<a href="{% url 'careers:career' 'ArtDesignFashion' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/fashion3.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip"data-placement="bottom" title="Science & Technology">
+					<a href="{% url 'careers:career' 'Technology' %}" ><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/science1.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="bottom" title="NonProfits">
+					<a href="{% url 'careers:career' 'NonProfits' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/nonprofit4.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="bottom" title="Health & Medicine">
+					<a href="{% url 'careers:career' 'HealthAndMedicine' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/medicine2.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="bottom" title="Government & Law">
+					<a href="{% url 'careers:career' 'GovernmentAndLaw' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/gov1.jpg"></a>
+				</div>
+				<div class="tile" data-toggle="tooltip" data-placement="bottom" title="Entertainment">
+					<a href="{% url 'careers:career' 'Entertainment' %}"><img src="https://d2usanuqr4r7y2.cloudfront.net/images/careers/entertainment2.jpg"></a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript"> 
+			$(document).ready(function(){
+				$(".limited-text").dotdotdot({height:65});
+				$('.tile').tooltip()
+			})
+		</script>
+		{% if contributions %}
+			<div class="content-item-list">
+				<h2 class="content-title volk-font">Top Experiences</h2>
+				{% for post in contributions %}
+					<div class="content-item" id="post_{{post.id}}">
+						<div class="author">
+							<div class="image-holder-round">
+								<a href="{% url 'userProfile:story' post.user.handle post.user.id %}">
+									<img src="https://d3op517cq3iurb.cloudfront.net/{{ post.user.pic }}" />
+								</a>
+							</div>			
+							<p>
+								<a href="{% url 'userProfile:story' post.user.handle post.user.id %}">{{ post.user.fname }} {{ post.user.lname }}
+									{% if post.user.title != "" %}
+										| {{ post.user.title }}
+									{% elif post.user.type != "" %}
+										| {{ post.user.type }}
+									{% endif %}
+								</a>
+							</p>		
+						</div>
+						<h1 class="volk-font"><a href="{% url 'contributions:detail' post.url post.id %}">{{ post.title }}</a></h1>
+						<p class="volk-font limited-text">{{ post.description }}</p>
+						<div class="tag-holder">
+							{% for tag in post.tags.all %}
+								<a class="tag volk-font grey-button-flat" href="{% url 'tagDetail:tagView' tag.handle tag.id %}">{{ tag.name }} </a>
+							{% endfor %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<p>No contributions were found!</p>
+		{% endif %}
+		<div class="content-side-bar">
+			<h2 class="content-title">Top Contributors</h2>
+			{% for point in points %}
+			<div class="side-item">
+				<div class="image-holder-small">
+					<img src="https://d3op517cq3iurb.cloudfront.net/{{ point.user.pic }}" />
+				</div>
+				<p><a href="{% url 'userProfile:story' point.user.handle point.user.id %}">{{ point.user.fname }} {{ point.user.lname }}</a></p>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

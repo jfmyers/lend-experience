@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+{% include "core/topNav_default.html" %}
+<div class="content">
+	<div class="content-inner">
+		<div class="form-center-message">
+			<h2 class="merri-font">SignUp Failed!</h2>
+			<p class="hel-font">Sorry about this. Please go back to the Sign Up form and try again.</p>
+			<a href="{%  url 'accounts:signup' %}" class="seagreen-button-flat hel-font aButton">Go to SignUp</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

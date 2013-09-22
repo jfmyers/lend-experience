@@ -1,0 +1,155 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+
+{% if authenticated == False %}
+	{% include "core/topNav_detail_out.html" %}
+{% else %}
+	{% include "core/topNav_detail_in.html" %}
+{% endif %}
+<div class="content">
+	<div class="content-inner">
+		<div class="content-item-list">
+			<div class="content-item single-content-item" id="post_{{ post.id }}" style="border-bottom:2px solid #DBDBDB">
+				<input type="hidden" id="post_pk" value="{{ post.id }}">
+				{% with tags=post.tags.all %}
+					<div class="tag-holder tag-holder-alt">
+						<!--<a class="category hell-font"></a>-->
+						<div id="current-tags">
+							{% if tags %}
+								{% for tag in tags %}
+									<a id="tag_{{ tag.id }}"class="tag volk-font grey-button-flat" href="{% url 'tagDetail:tagView' tag.handle tag.id %}">{{ tag.name }}</a>
+								{% endfor %}
+							{% else %}
+								<p id="no_tag_alert" class="volk-font" style="width:auto;float:left;margin-right:10px;">This experience has no career tags.</p>
+							{% endif %}
+						</div>
+						{% if authenticated == True %}
+							<a class="edit-tag">Edit <i class="icon-edit"></i></a>
+						{% endif %}
+					</div>
+					<div class="tag-holder tag-holder-alt blank">
+						<div id="tags-to-remove">
+							{% for tag in tags %}
+								<form class="tag_remove_form" action="{% url 'tags:removeTag' %}" method="POST">
+									<input type="hidden" name="tag_id" value="{{ tag.id }}"/>
+									<input type="hidden" name="contribution_id" value="{{ post.id }}"/>
+									<p class="tag-edit volk-font">
+										<span class="tag-edit-text">{{ tag.name }}</span>
+										<button type="submit" class="close">×</button>
+									</p>
+									{% csrf_token %}
+								</form>
+							{% endfor %}
+						</div>
+						<div class="tag-new">
+							<form id="tag_search_form" method="POST" action="{% url 'tags:search' %}">
+								<input type="text" name="tag_text" id="tag_text" placeholder="Search Tags" />
+								<input type="hidden" name="contribution_id" value="{{ post.id }}"/>
+								{% csrf_token %}
+							</form>
+							<a class="cancel lightgrey-button-flat">Finished</a>
+							<div class="tag-search-box blank">
+								<div id="tag-search-results">
+									<p class="hell-font">Begin typing to search existing tags or add a new one.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endwith %}
+				<div class="author">
+					<div class="image-holder-round">
+						<a href="{% url 'userProfile:story' post.user.handle post.user.id %}"><img src="https://d3op517cq3iurb.cloudfront.net/{{ post.user.pic }}" /></a>
+					</div>
+					<p>
+						<a href="{% url 'userProfile:story' post.user.handle post.user.id %}">
+							{{ post.user.fname }} {{ post.user.lname }}
+							{% if post.user.title != "" %}
+								| {{ post.user.title }}
+							{% elif post.user.type != "" %}
+								| {{ post.user.type }}
+							{% endif %}
+						</a>
+					</p>
+				</div>
+				<h1 class="volk-font">
+					<span>{{ post.title }}</span>
+					{% if post.user.id == user_id %}
+						<a class="edit" href="{% url 'contributions:edit' post.url post.id %}">Edit <i class="icon-edit"></i></a></h1>
+					{% endif %}
+				</h1>
+				{% if post.formatted_description == "" %}
+					<p class="volk-font full-text">{% autoescape off %} {{ post.description | linebreaksbr }} {% endautoescape %}</p>
+				{% else %}
+					<div class="volk-font full-text">{% autoescape off %} {{ post.formatted_description }} {% endautoescape %}</div>
+				{% endif %}
+			</div>
+			{% with comments=post_comments %}
+				{% if authenticated == True %}
+					<div class="comment-action">
+						<div class="comment-action-head">
+							{% with comment_count=comments.count %}
+								{% if comment_count == 1 %}
+									<p><strong>{{ comment_count }}</strong> Response</p>
+								{% else %}
+									<p><strong>{{ comment_count }}</strong> Responses</p>
+								{% endif %}
+							{% endwith %}
+							<p><strong>Contribute a Response</strong></p>
+						</div>
+						<div class="comment-result"></div>
+						<div class="comment-input-fake">
+							<textarea id="fake-comment-input" placeholder="Click to contribute your response..."></textarea>
+						</div>
+						<div class="comment-input-real blank">						
+							<form id="comment-form" action="{% url 'contributions:comment_save' %}" method="post">
+								<textarea id="text" name="text" placeholder="Start typing..."></textarea>
+								<input id="contribution_id" name="contribution_id" type="hidden" value="{{ post.id }}">
+								<input type="submit" value="Add Response" class="submitCommentButton seagreen-button-flat" />
+								{% csrf_token %}
+							</form>
+						</div>
+					</div>
+				{% endif %}
+				<ul class="comment-list">
+					{% for comment in comments.all %}
+						<li>
+							<div class="author">
+								<div class="image-holder-round">
+									<a href="{% url 'userProfile:story' comment.user.handle comment.user.id %}">
+										<img src="https://d3op517cq3iurb.cloudfront.net/{{ comment.user.pic }}" />
+									</a>
+								</div>
+								<p>
+									<a href="{% url 'userProfile:story' comment.user.handle comment.user.id %}">
+										{{ comment.user.fname }} {{ comment.user.lname }}
+										{% if comment.user.title != "" %}
+										| {{ comment.user.title }}
+										{% elif comment.user.type != "" %}
+										| {{ comment.user.type }}
+										{% endif %}
+									</a>
+								</p>
+							</div>
+							<p class="volk-font full-text">{% autoescape off %} {{ comment.text | linebreaksbr }} {% endautoescape %}</p>
+							{% if user_id == comment.user.id %}
+								<div class="remove-item">
+									<form class="comment-remove-form" action="{% url 'contributions:comment_remove' %}" method="POST">
+										<input id="comment_id" name="comment_id" type="hidden" value="{{ comment.id }}">
+										<input type="submit" value="Delete Comment"></input>
+										{% csrf_token %}
+									</form>
+								</div>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			{% endwith %}
+		</div>
+	</div>
+</div>
+<script type="text/javascript"> 
+	var page = "singleContribution";
+</script>
+{% endblock %}

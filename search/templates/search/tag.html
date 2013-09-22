@@ -1,0 +1,12 @@
+{% load url from future %}
+<a id="tag_{{ tag.id }}"class="tag volk-font grey-button-flat" href="{% url 'tagDetail:tagView' tag.handle tag.id %}">{{ tag.name }}</a>
+`
+<form class="tag_remove_form" action="{% url 'tags:removeTag' %}" method="POST">
+	<input type="hidden" name="tag_id" value="{{ tag.id }}"/>
+	<input type="hidden" name="contribution_id" value="{{ tag.contribution_id }}"/>
+	<p class="tag-edit volk-font" href="">
+		<span class="tag-edit-text">{{ tag.name }}</span>
+		<button type="submit" class="close">×</button>
+	</p>
+	{% csrf_token %}
+</form>

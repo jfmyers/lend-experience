@@ -1,0 +1,10 @@
+{% load url from future %}
+
+{% if results %}
+{% for result in results %}
+	<input type="submit" name="newTag" class="newTagSubmit career-topic-result" data-type="old" value="{{ result }}"/>
+{% endfor %}
+{% else %}
+	<p>Create New Tag <span style="color:#0E4141">{{ search.string }}</span></p>
+	<input type="submit" name="newTag" class="newTagSubmit career-topic-result" data-type="new" value="{{ search.string }} "/>
+{% endif %}

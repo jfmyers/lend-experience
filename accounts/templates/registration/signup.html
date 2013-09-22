@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+{% include "core/topNav_default.html" %}
+<div class="content">
+	<div class="content-inner">
+		<div class="form-center" style="height:600px">
+			<h2 class="merri-font">Simple SignUp</h2>
+			{% if form.errors %}
+			    {% for field in form %}
+			        {% for error in field.errors %}
+						{% if field.name == "first_name" %}
+							<div class="form-error">
+								<h3 class="merri-font">First Name is required.</h3>
+							</div>
+						{% elif field.name == "last_name"%}
+							<div class="form-error">
+								<h3 class="merri-font">Last Name is required.</h3>
+							</div>
+						{% elif field.name == "email"%}
+							<div class="form-error">
+								<h3 class="merri-font">Email: {{ error|escape }}</h3>
+							</div>
+						{% else %}
+							<div class="form-error">
+								<h3 class="merri-font">Password: {{ error|escape }}</h3>
+							</div>
+						{% endif %}
+			        {% endfor %}
+			    {% endfor %}
+			{% endif %}
+			{% if duplicate %}
+				<div class="form-error">
+					<h3 class="merri-font">Email address is already taken!</h3>
+				</div>
+			{% endif %}
+			
+			<form action="." method="post">
+				{% if form.first_name.value != None %}
+					<input id="first_name" name="first_name" puesdoname="First Name" type="text" placeholder="First Name" value="{{ form.first_name.value }}" />
+				{% else %}
+					<input id="first_name" name="first_name" puesdoname="First Name" type="text" placeholder="First Name" />
+				{% endif %}
+				{% if form.last_name.value != None %}
+					<input id="last_name" name="last_name" type="text" placeholder="Last Name" value="{{ form.last_name.value }}"/>
+				{% else %}
+					<input id="last_name" name="last_name" type="text" placeholder="Last Name" />
+				{% endif %}
+				{% if form.email.value != None %}
+					<input id="email" maxlength="254" name="email" type="text" placeholder="Email Address" value="{{ form.email.value }}" />
+				{% else %}
+					<input id="email" maxlength="254" name="email" type="text" placeholder="Email Address" />
+				{% endif %}
+				<input id="password" name="password" type="password" placeholder="Password" >
+				{% csrf_token %}
+				<input type="submit" value="Sign Up" class="seagreen-button-flat" />
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block content %}
+{% if authenticated == False %}
+	{% include "core/topNav_detail_out.html" %}
+{% else %}
+	{% include "core/topNav_detail_in.html" %}
+{% endif %}
+<script type="text/javascript"> 
+	var page = "about";
+</script>
+
+<div class="content">
+	<div class="content-inner">
+		<div class="info-left">
+			<h1 class="merri-font">Lend Experience's mission is for everyone to discover a career they'll love.</h1>
+			<p>There are too many individuals employed in jobs they aren't deeply passionate about. A lack of easily accessible and organized career knowledge results in recent graduates entering careers that aren't necessarily right for them.
+			</br></br>
+			Lend Experience was launched in the spring of 2012 as an answer to this problem. Through a system of localized community teams, Lend Experience connects like-minded students and professionals via live talks and career related opportunities, such as job-shadowing and internships. Community teams also recruit professionals to become contributors of career experiences on the Lend Experience website, which serves as a career knowledge base and bridge between all communities.
+			</br></br>
+			</p>
+			<p style="margin:20px 0px 0px 0px;border-top:1px dotted #aaa;padding:10px 0px 0px 0px;font-size:14px">
+				Lend Experience is the creation of <a href="http://lendexperience.com/jmyers_107" target="_blank">Jim Myers</a>, <a href="http://lendexperience.com/freimer_108" target="_blank">Fred Reimer</a> and <a href="http://lendexperience.com/sdellamore_109" target="_blank">Steven Dell'Amore</a>, our first community team member.
+			</p>
+		</div>
+		{% include "siteInfo/sideNav.html" %}
+	</div>
+</div>
+{% endblock %}

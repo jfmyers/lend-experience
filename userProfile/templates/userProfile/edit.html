@@ -1,0 +1,118 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block content %}
+
+{% include "core/topNav_detail_in.html" %}
+<script type="text/javascript"> 
+	var page = "editStory"
+</script>
+
+<div class="content">
+	<div class="content-inner">
+		<div class="table">
+			<h3 class="table-title">Edit Story Details</h3>
+			<div class="table-row" >
+				<div class="table-col1" style="border-top:2px solid #ddd;height:219px;">
+					<label for="fname" >Story Photo</label>
+				</div>
+				<div class="table-col2" style="border-top:2px solid #ddd;">
+					<div class="image-preview">
+						<img src="https://d3op517cq3iurb.cloudfront.net/{{profile.pic}}" name="pic" id="pic"/>
+					</div>
+					<form method="POST" action="{% url 'myUserProfile:uploadImage' %}" enctype="multipart/form-data">
+						<input type="file" name="file" id="file" />
+						<input type="submit" class="upload-button seagreen-button-flat" value="Upload Photo" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row" >
+				<div class="table-col1">
+					<label for="fname" >First Name</label>
+				</div>
+				<div class="table-col2">
+					<form id="fname_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="fname" value="{{ profile.fname }}" placeholder="First Name"/>
+						<input type="hidden" name="target" value="fname" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row">
+				<div class="table-col1">
+					<label for="lname" >Last Name</label>
+				</div>
+				<div class="table-col2">
+					<form id="lname_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="lname" value="{{ profile.lname }}" placeholder="Last Name"/>
+						<input type="hidden" name="target" value="lname" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row">
+				<div class="table-col1">
+					<label for="company" >Company</label>
+				</div>
+				<div class="table-col2">
+					<form id="company_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="company" value="{{ profile.company }}" placeholder="Company"/>
+						<input type="hidden" name="target" value="company" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row">
+				<div class="table-col1">
+					<label for="title" >Title</label>
+				</div>
+				<div class="table-col2">
+					<form id="title_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="title" value="{{ profile.title }}" placeholder="Title"/>
+						<input type="hidden" name="target" value="title" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row">
+				<div class="table-col1">
+					<label for="city" >City</label>
+				</div>
+				<div class="table-col2">
+					<form id="city_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="city" value="{{ profile.city }}" placeholder="City"/>
+						<input type="hidden" name="target" value="city" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row">
+				<div class="table-col1">
+					<label for="state">State</label>
+				</div>
+				<div class="table-col2">
+					<form id="state_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="state" value="{{ profile.state }}" placeholder="State"/>
+						<input type="hidden" name="target" value="state" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+			<div class="table-row">
+				<div class="table-col1">
+					<label for="email">Email</label>
+				</div>
+				<div class="table-col2">
+					<form id="email_form" method="POST" action="{% url 'myUserProfile:saveEdit' %}">
+						<input type="text" name="updateValue" id="email" value="{{ user.email }}" placeholder="Email Address (Used for Login)"/>
+						<input type="hidden" name="target" value="email" />
+						{% csrf_token %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

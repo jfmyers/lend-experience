@@ -1,0 +1,29 @@
+{% load url from future %}
+
+<li>
+	<div class="author">
+		<div class="image-holder-round">
+			<a href="{% url 'userProfile:story' comment.user.handle  comment.user.id %}">
+				<img src="https://d3op517cq3iurb.cloudfront.net/{{ comment.user.pic }}" />
+			</a>
+		</div>
+		<p>
+			<a href="{% url 'userProfile:story' comment.user.handle comment.user.id %}">
+				{{ comment.user.fname }} {{ comment.user.lname }}
+				{% if comment.user.title != "" %}
+					| {{ comment.user.title }}
+				{% elif comment.user.type != "" %}
+					| {{ comment.user.type }}
+				{% endif %}
+			</a>
+		</p>
+	</div>
+	<p class="volk-font full-text">{% autoescape off %} {{comment.text | linebreaksbr}} {% endautoescape %}</p>
+	<div class="remove-item">
+		<form class="comment-remove-form" action="{% url 'contributions:comment_remove' %}" method="POST">
+			<input id="comment_id" name="comment_id" type="hidden" value="{{ comment.id }}">
+			<input type="submit" value="Delete Comment"></input>
+			{% csrf_token %}
+		</form>
+	</div>
+</li>

@@ -1,0 +1,58 @@
+<!--<script type="text/javascript" src="../../../../../static/js/jquery.hotkeys.js" ></script>
+<script type="text/javascript" src="../../../../../static/js/bootstrap-wysiwyg.js" ></script>
+<script type="text/javascript" src="https://d3fuw6vo22gqor.cloudfront.net/js/placeholder.v.2.1.0.js" ></script>
+ <script src="../../../static/js/controllers/ContributionsController.js"></script>
+<script src="../../../static/js/controllers/SingleContributionController.js"></script>
+	<script src="../../../static/js/controllers/StoryController.js"></script>
+<script src="../../../static/js/controllers/EditStoryController.js"></script>
+<script src="../../../static/js/controllers/CareerController.js"></script>
+<script src="../../../static/js/controllers/AddContributionController.js"></script>
+<script src="../../../static/js/controllers/EditContributionController.js"></script>
+<script src="../../../static/js/controllers/CoreController.js"></script>
+<script src="../../../static/js/misc.js"></script>
+	<script src="../../../static/js/routers/Router.js"></script>-->
+<script type="text/javascript" src="https://d2usanuqr4r7y2.cloudfront.net/js/lib/jquery.hotkeys.js" ></script>
+<script type="text/javascript" src="https://d2usanuqr4r7y2.cloudfront.net/js/lib/bootstrap-wysiwyg.js" ></script>
+<script type="text/javascript" src="https://d2usanuqr4r7y2.cloudfront.net/js/lib/placeholder.v.2.1.0.js" ></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/ContributionsController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/SingleContributionController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/StoryController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/EditStoryController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/CareerController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/AddContributionController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/EditContributionController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/controllers/CoreController.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/misc.js"></script>
+<script src="https://d2usanuqr4r7y2.cloudfront.net/js/app/routers/Router.js"></script>
+
+	<script type="text/javascript">
+		var app = app|| {};
+		var ENTER_KEY = 13;
+		$(window).bind('popstate',function(){return false;});
+		var Router;
+		$(function () {
+			'use strict';
+			Router = new app.Router();
+			// Enable pushState for compatible browsers
+			var enablePushState = true;  
+		
+			// Disable for older browsers (IE8, IE9 etc)
+			var pushState = !!(enablePushState && window.history && window.history.pushState);
+		
+			if(pushState) {
+				Backbone.emulateHTTP = true;
+			    Backbone.history.start({
+			        pushState: true
+			    })
+			} else {
+				Backbone.history.start({
+			    	pushState: false
+			    })
+			}
+			Backbone.emulateJSON = true;
+		});
+	$(document).ready(function(){
+		app.Core = app.CoreController;
+		app.Core.init();
+	})
+</script>

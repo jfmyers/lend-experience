@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+{% include "core/topNav_default.html" %}
+<div class="content">
+	<div class="content-inner">
+		<div class="form-center">
+			<h2 class="merri-font">Welcome Back</h2>
+			{% if form.errors %}
+			<div class="form-error">
+				<h3 class="merri-font">Your username or password didn't match, please try again.</h3>
+			</div>
+			{% endif %}
+			<form action="." method="post">
+				<input id="id_username" maxlength="254" name="username" type="text" placeholder="Email Address" />
+				<input id="id_password" name="password" type="password" placeholder="Password">
+				<a href="{% url 'accounts:password_reset' %}"class="helper merri-font">Forget password?</a>
+				{% if next %}
+					<input type="hidden" name="next" value="{{ next }}" />
+				{% else %}
+					<input type="hidden" name="next" value="/contributions/" />
+				{% endif %}
+				{% csrf_token %}
+				<input type="submit" value="Login" class="seagreen-button-flat" />
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
