@@ -4,7 +4,7 @@ This is the Django application for Lend Experience.
 <br>
 <h4>Applications:</h4>
 <ol>
-	<li>`accounts` - handles user registration, login and forgotten passwords</li>
+	<li>````accounts```` - handles user registration, login and forgotten passwords</li>
 	<li>`careers` - browse contributions by career categories. Contains an algorithm for assigning careers to career categories.</li>
 	<li>`contributions` - handles editing, creating and viewing contribution posts, as well as adding and removing comments (comments should probably be separated out into their own application). Contributions are also known as "experiences" or "experience posts".</li>
 	<li>`core` - location of Template shared by applications.</li>
